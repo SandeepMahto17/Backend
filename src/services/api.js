@@ -1,7 +1,7 @@
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': 'https://front-chi-puce.vercel.app',
+  'Access-Control-Allow-Origin': 'https://sanpay.vercel.app',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
