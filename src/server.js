@@ -5,18 +5,9 @@ const paymentRoutes = require('./routes/paymentRoutes');
 
 const app = express();
 
-app.options('*', (req, res) => {
-  res.set({
-    'Access-Control-Allow-Origin': 'https://front-chi-puce.vercel.app', // Frontend origin
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-  });
-  res.sendStatus(200);
-});
-
 // Middleware
 app.use(cors({
-  origin: 'https://front-chi-puce.vercel.app',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -53,4 +44,3 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
