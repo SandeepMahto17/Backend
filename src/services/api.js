@@ -1,5 +1,10 @@
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
 
 export const paymentService = {
   async processPayment(vendorEmail, amount) {
@@ -8,6 +13,7 @@ export const paymentService = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          ...corsHeaders,
         },
         body: JSON.stringify({
           vendor_email: vendorEmail,
@@ -22,7 +28,12 @@ export const paymentService = {
 
   async getSolanaPrice() {
     try {
-      const response = await fetch(`${API_BASE_URL}/solana-price`);
+      const response = await fetch(`${API_BASE_URL}/solana-price`, {
+        method: 'GET',
+        headers: {
+          ...corsHeaders,
+        },
+      });
       const data = await response.json();
       return data.price;
     } catch (error) {
@@ -36,6 +47,7 @@ export const paymentService = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          ...corsHeaders,
         },
         body: JSON.stringify({ signature }),
       });
@@ -43,5 +55,11 @@ export const paymentService = {
     } catch (error) {
       throw new Error('Transaction verification failed');
     }
-  }
+  },
 };
+
+// Handle preflight requests
+export async function handleOptionsRequest(req, res) {
+  res.set(corsHeaders);
+  res.status(200).end();
+}
